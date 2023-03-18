@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { useLink, useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useCountries, getAndNormalizeCountriesData } from '../store';
 import { pipe, ifElse, isNeitherNullNorUndefined, find } from '../helpers/fp';
 
@@ -21,73 +21,73 @@ const findCountry = pipe(
 );
 
 // getCountry :: countries -> Promise<country>
-const getCountry = ifElse(
-  isNeitherNullNorUndefined,
-  findCountry,
-  () => getAndNormalizeCountriesData(route.params.country)
+const getCountry = ifElse(isNeitherNullNorUndefined, findCountry, () =>
+  getAndNormalizeCountriesData(route.params.country)
 );
 
 getCountry(countries.value)
-  .then(arr => country.value = arr[0])
-  .catch(err => error.value = err);
-
+  .then(arr => (country.value = arr[0]))
+  .catch(err => (error.value = err));
 
 const arrow = '<-';
-const handleClick = () => router.push({name: 'home', path: '/'});
+const handleClick = () => router.push({ name: 'home', path: '/' });
 </script>
 
 <template>
   <div class="max-w-7xl m-auto px-4">
-    <button @click="handleClick" class="flex gap-3 my-24 py-2 px-9 shadow-lg rounded-md dark:bg-primary-dark bg-primary-light">
-      <div>{{arrow}}</div>
+    <button
+      @click="handleClick"
+      class="flex gap-3 my-24 py-2 px-9 shadow-lg rounded-md dark:bg-primary-dark bg-primary-light"
+    >
+      <div>{{ arrow }}</div>
       Back
     </button>
-    <div v-if="error">{{error}}</div>
+    <div v-if="error">{{ error }}</div>
     <div v-else-if="country" class="flex justify-between gap-28">
-      <img :src="country.flags.png" alt="flag" class="w-[560px] h-[350px]">
+      <img :src="country.flags.png" alt="flag" class="w-[560px] h-[350px]" />
       <div class="flex flex-col justify-start gap-10">
-        <h2 class="text-3xl font-extrabold">{{country.name.common}}</h2>
+        <h2 class="text-3xl font-extrabold">{{ country.name.common }}</h2>
         <div class="flex justify-between gap-20 text-lg">
           <div class="flex flex-col gap-2">
             <p>
               <b class="font-extrabold">Native Name:</b>
-              {{country.name.native}}
+              {{ country.name.native }}
             </p>
             <p>
               <b class="font-extrabold">Population:</b>
-              {{country.population}}
+              {{ country.population }}
             </p>
             <p>
               <b class="font-extrabold">Region:</b>
-              {{country.region}}
+              {{ country.region }}
             </p>
             <p>
               <b class="font-extrabold">Sub Region:</b>
-              {{country.subRegion}}
+              {{ country.subRegion }}
             </p>
             <p>
               <b class="font-extrabold">Capital:</b>
-              {{country.capital}}
+              {{ country.capital }}
             </p>
           </div>
           <div class="flex flex-col gap-2">
             <p>
               <b class="font-extrabold">Top Level Domain:</b>
-              {{country.topLevelDomain}}
+              {{ country.topLevelDomain }}
             </p>
             <p>
               <b class="font-extrabold">Currencies:</b>
-              {{country.currencies}}
+              {{ country.currencies }}
             </p>
             <p>
               <b class="font-extrabold">Languages:</b>
-              {{country.languages}}
+              {{ country.languages }}
             </p>
           </div>
         </div>
         <div>
           <b class="text-lg font-extrabold">Border Countries:</b>
-          {{country.borderCountries}}
+          {{ country.borderCountries }}
         </div>
       </div>
     </div>

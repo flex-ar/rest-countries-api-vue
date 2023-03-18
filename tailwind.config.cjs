@@ -1,10 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -17,9 +14,9 @@ module.exports = {
           light: 'hsl(0, 0%, 98%)', // Very Light Gray
         },
         text: 'hsl(200, 15%, 8%)', // Very Dark Blue
-        input: 'hsl(0, 0%, 52%)' // Dark Grey
-      }
+        input: 'hsl(0, 0%, 52%)', // Dark Grey
+      },
     },
   },
   plugins: [],
-}
+};

@@ -4,15 +4,15 @@ import App from './App.vue';
 
 import './style.css';
 
-const Home = () => import('./components/Home.vue');
-const Detail = () => import('./components/Detail.vue');
+const CountriesHome = () => import('./components/CountriesHome.vue');
+const CountryDetail = () => import('./components/CountryDetail.vue');
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    { path: '/', name: 'home', component: Home },
-    { path: '/:country', name: 'detail', component: Detail },
-  ]
+    { path: '/', name: 'home', component: CountriesHome },
+    { path: '/:country', name: 'detail', component: CountryDetail },
+  ],
 });
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(router).mount('#app');

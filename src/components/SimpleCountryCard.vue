@@ -14,31 +14,32 @@ defineProps({
   },
   capital: {
     type: String,
+    default: '',
     required: false,
   },
   flag: {
     type: String,
     required: true,
-  }
-})
+  },
+});
 </script>
 
 <template>
-  <img :src="flag" class="w-[264px] h-[160px]"/>
+  <img :src="flag" class="w-[264px] h-[160px]" />
   <div class="py-7 px-6">
-    <b class="text-lg font-extrabold mb-5">{{name}}</b>
+    <b class="text-lg font-extrabold mb-5">{{ name }}</b>
     <div class="mt-3 text-sm">
       <p class="mb-1">
         <b class="font-extrabold">Population: </b>
-        {{population}}
+        {{ population }}
       </p>
       <p class="mb-1">
         <b class="font-extrabold">Region: </b>
-        {{region}}
+        {{ region }}
       </p>
       <p class="mb-1">
         <b class="font-extrabold">Capital: </b>
-        {{capital}}
+        {{ capital }}
       </p>
     </div>
   </div>
