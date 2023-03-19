@@ -1,4 +1,4 @@
-import { getProp, map, Maybe, pipe } from '../helpers/fp';
+import { getProp, map, Maybe, pipe } from './fp';
 
 const saveObj = obj => obj ?? {};
 const defaultString = value => value || 'none';
@@ -28,7 +28,7 @@ export const normalizer = x => ({
   population: x.population,
   region: x.region,
   subRegion: defaultString(x.subregion),
-  borderCountries: defaultString(x.borders),
+  borderCountries: x.borders || [],
   languages: getPropAndConvertToString(getLastElementArray)(x.languages),
   capital: defaultString(getCapital(x.capital)),
   flags: x.flags,
