@@ -2,15 +2,17 @@
 import SimpleCountryCard from '../components/SimpleCountryCard.vue';
 import CountriesFilter from '../components/CountriesFilter.vue';
 import CountrySearch from '../components/CountrySearch.vue';
+import { inject, ref, onMounted, computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { inject, ref, onMounted, computed } from 'vue';
+import { useObserver } from '../hooks/useObserver';
 
-const router = useRouter();
 const { state, fetchCountries } = inject('state');
 const searchQuery = ref('');
+const router = useRouter();
+const { loaded, resetLoaded, itemsRef } = useObserver(state.data, 4 * 3);
 
 const filterCountries = query => {
-  return state.data.filter(
+  return state.data?.filter(
     ({ isVisible, name }) =>
       isVisible && name.common.toLowerCase().includes(query)
   );
@@ -21,6 +23,12 @@ const visibleCountries = computed(() => {
   const query = searchQuery.value.toLowerCase();
   return filterCountries(query);
 });
+
+watch(visibleCountries, resetLoaded);
+
+const lazyCountries = computed(() =>
+  visibleCountries.value?.slice(0, loaded.value)
+);
 
 const select = name =>
   router.push({ name: 'detail', params: { country: name } });
@@ -49,20 +57,13 @@ onMounted(() => {
   <div v-else class="max-w-7xl m-auto py-10 px-4">
     <ul class="grid gap-16 justify-center">
       <li
-        v-for="(
-          { name, population, region, capital, flags }, index
-        ) in visibleCountries"
-        @click="_ => select(name.common)"
+        ref="itemsRef"
+        v-for="(country, index) in lazyCountries"
+        @click="_ => select(country.name.common)"
         :key="index"
         class="rounded-lg bg-primary-light dark:bg-primary-dark overflow-hidden cursor-pointer shadow-lg transition-[transform,box-shadow] hover:scale-105 hover:shadow-2xl"
       >
-        <SimpleCountryCard
-          :name="name.common"
-          :population="population"
-          :region="region"
-          :capital="capital"
-          :flag="flags.png"
-        />
+        <SimpleCountryCard :country="country" />
       </li>
     </ul>
   </div>

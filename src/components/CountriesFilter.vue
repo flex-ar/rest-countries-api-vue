@@ -7,14 +7,14 @@ const { state } = inject('state');
 const toggleActive = () => (active.value = !active.value);
 
 const handleFilter = region => {
-  state.data = state.data.map(country => ({
+  state.data = state.data?.map(country => ({
     ...country,
     isVisible: country.region === region,
   }));
 };
 
 const reset = () => {
-  state.data = state.data.map(country => ({ ...country, isVisible: true }));
+  state.data = state.data?.map(country => ({ ...country, isVisible: true }));
 };
 </script>
 
